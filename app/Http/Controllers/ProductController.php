@@ -10,7 +10,10 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
-    public function create(Request $request) {
+    public function create() {
+        return view('layouts.products.create');
+    }
+    public function store(Request $request) {
         $request->validate([
             "nama_makanan" => "required|string|max:255",
             "price" => "required|integer",
@@ -23,19 +26,25 @@ class ProductController extends Controller
             "description" => $request->description,
         ]);
 
-        return response("product berhasil dibuat", 201);
+        return redirect()->route('product.index')->with('succes', 'created');
     }
 
      public function delete(Request $request, $id) {
         $product = Product::where('id', '=', $id)->first();
 
         $product->delete();
-        return response("product berhasil dihapus", 201);
+
+        return redirect()->route('products.index')->with('success', 'deleted');
     }
 
-    public function get() {
-        $product = Product::get();
-        return response($product, 201);
+    public function index() {
+        $products = Product::all();
+        return view('layouts.products.index', compact('products'));
+    }
+
+    public function edit($id) {
+        $product = Product::where('id', '=', $id)->first();
+        return view('layouts.products.edit', compact('product'));
     }
 
     public function update(Request $request, $id) {
@@ -49,6 +58,6 @@ class ProductController extends Controller
 
         $product->update($request->only('nama_makanan', 'price', 'description'));
 
-        return response($product, 201);
+        return redirect()->route('products.index')->with('succes', 'apdet');
     }
 }    
