@@ -3,60 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Produk</title>
+    <title>Add New Culinary Creation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --dark-bg: #121212;
+            --dark-surface: #1E1E1E;
+            --accent-color: #8B7355;
+            --text-primary: #E0E0E0;
+            --text-secondary: #A0A0A0;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
         .container {
-            width: 50%;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: var(--dark-surface);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
-        form {
-            display: flex;
-            flex-direction: column;
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            letter-spacing: -0.5px;
         }
-        label, input, textarea {
-            margin-bottom: 10px;
+
+        .form-group {
+            margin-bottom: 1.5rem;
         }
-        input, textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
         }
-        .btn {
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: white;
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--dark-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(139, 115, 85, 0.2);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            background-color: var(--accent-color);
+            color: var(--text-primary);
             border: none;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
         }
-        .btn:hover {
-            background-color: #2980b9;
+
+        .btn-submit:hover {
+            background-color: #A0785F;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-submit:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Tambah Produk</h1>
+        <h1 class="form-title">Create New Culinary Experience</h1>
         <form action="{{ route('products.store') }}" method="POST">
             @csrf
-            <label for="nama_makanan">Nama Makanan</label>
-            <input type="text" name="nama_makanan" id="nama_makanan" required>
+            <div class="form-group">
+                <label for="nama_makanan" class="form-label">Dish Name</label>
+                <input type="text" 
+                       name="nama_makanan" 
+                       id="nama_makanan" 
+                       class="form-input" 
+                       placeholder="Enter dish name" 
+                       required>
+            </div>
 
-            <label for="price">Harga</label>
-            <input type="number" name="price" id="price" required>
+            <div class="form-group">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" 
+                       name="price" 
+                       id="price" 
+                       class="form-input" 
+                       placeholder="0.00" 
+                       step="0.01" 
+                       required>
+            </div>
 
-            <label for="description">Deskripsi</label>
-            <textarea name="description" id="description" rows="4" required></textarea>
+            <div class="form-group">
+                <label for="description" class="form-label">Dish Description</label>
+                <textarea 
+                    name="description" 
+                    id="description" 
+                    class="form-input form-textarea" 
+                    placeholder="Describe the culinary experience..." 
+                    required></textarea>
+            </div>
 
-            <button type="submit" class="btn">Simpan</button>
+            <button type="submit" class="btn-submit">Create Dish</button>
         </form>
     </div>
 </body>
